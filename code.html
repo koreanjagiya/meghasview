@@ -1,0 +1,1211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MeghasView | Premium AI Creative Economy</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;700&family=Playfair+Display:ital,wght@0,600;1,600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        'mv-black': '#050505',
+                        'mv-charcoal': '#0F0F0F',
+                        'mv-surface': '#18181B',
+                        'mv-gold': '#FFD700',
+                        'mv-violet': '#8B5CF6',
+                        'mv-neon': '#06b6d4',
+                    },
+                    fontFamily: {
+                        sans: ['Outfit', 'sans-serif'],
+                        serif: ['Playfair Display', 'serif'],
+                    },
+                    backgroundImage: {
+                        'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
+                        'hero-glow': 'conic-gradient(from 90deg at 50% 50%, #000000 0%, #1a1a1a 50%, #000000 100%)',
+                    },
+                    animation: {
+                        'float': 'float 6s ease-in-out infinite',
+                        'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        'fade-in': 'fadeIn 0.5s ease-out forwards',
+                        'slide-up': 'slideUp 0.6s ease-out forwards',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-10px)' },
+                        },
+                        fadeIn: {
+                            '0%': { opacity: '0', transform: 'translateY(10px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' },
+                        },
+                        slideUp: {
+                            '0%': { opacity: '0', transform: 'translateY(20px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #050505; }
+        ::-webkit-scrollbar-thumb { background: #333; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #555; }
+
+        /* Glassmorphism */
+        .glass {
+            background: rgba(24, 24, 27, 0.7);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        
+        .glass-card {
+            background: linear-gradient(145deg, rgba(255,255,255,0.03) 0%, rgba(255,255,255,0.01) 100%);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        .glass-card:hover {
+            transform: translateY(-5px) scale(1.01);
+            border-color: rgba(139, 92, 246, 0.5);
+            box-shadow: 0 20px 40px -10px rgba(139, 92, 246, 0.15);
+        }
+
+        /* Masonry Grid */
+        .masonry-grid { column-count: 1; column-gap: 1.5rem; }
+        @media (min-width: 640px) { .masonry-grid { column-count: 2; } }
+        @media (min-width: 1024px) { .masonry-grid { column-count: 3; } }
+        @media (min-width: 1280px) { .masonry-grid { column-count: 4; } }
+        .masonry-item { break-inside: avoid; margin-bottom: 1.5rem; }
+
+        /* Range Slider */
+        input[type=range] { -webkit-appearance: none; background: transparent; }
+        input[type=range]::-webkit-slider-thumb {
+            -webkit-appearance: none; height: 16px; width: 16px; border-radius: 50%;
+            background: #06b6d4; cursor: pointer; margin-top: -6px; box-shadow: 0 0 10px #06b6d4;
+        }
+        input[type=range]::-webkit-slider-runnable-track {
+            width: 100%; height: 4px; cursor: pointer; background: #333; border-radius: 2px;
+        }
+
+        /* Loader */
+        .loader {
+            border: 3px solid rgba(255,255,255,0.1); border-radius: 50%;
+            border-top: 3px solid #8B5CF6; width: 24px; height: 24px;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+
+        /* Text Gradients */
+        .text-gradient-gold { background: linear-gradient(to right, #FFD700, #FDB931); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .text-gradient-neon { background: linear-gradient(to right, #06b6d4, #8B5CF6); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        
+        /* Code Block Style */
+        .code-block {
+            font-family: 'Courier New', Courier, monospace;
+            background: #0f0f0f;
+            border: 1px solid #333;
+            border-radius: 8px;
+            padding: 1rem;
+            color: #a3a3a3;
+            font-size: 0.85rem;
+            overflow-x: auto;
+        }
+        .code-keyword { color: #c084fc; }
+        .code-type { color: #06b6d4; }
+        .code-string { color: #4ade80; }
+
+        /* Slide Deck Styles */
+        .slide-container {
+            perspective: 1000px;
+        }
+        .slide {
+            transition: transform 0.6s;
+            transform-style: preserve-3d;
+        }
+        .slide.active {
+            transform: translateX(0);
+            opacity: 1;
+        }
+        .slide.prev {
+            transform: translateX(-100%);
+            opacity: 0;
+        }
+        .slide.next {
+            transform: translateX(100%);
+            opacity: 0;
+        }
+
+        /* Category Tag Styles */
+        .category-tag {
+            transition: all 0.3s ease;
+        }
+        .category-tag:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 15px rgba(255,255,255,0.1);
+        }
+    </style>
+</head>
+<body class="bg-mv-black text-gray-200 font-sans antialiased overflow-x-hidden selection:bg-mv-violet selection:text-white">
+
+    <!-- Background Ambient Effects -->
+    <div class="fixed top-0 left-0 w-full h-full overflow-hidden -z-10 pointer-events-none">
+        <div class="absolute top-[-10%] left-[-10%] w-[500px] h-[500px] bg-mv-violet/10 rounded-full blur-[120px] animate-pulse-slow"></div>
+        <div class="absolute bottom-[-10%] right-[-10%] w-[600px] h-[600px] bg-mv-neon/10 rounded-full blur-[120px] animate-pulse-slow" style="animation-delay: 2s;"></div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="fixed top-0 w-full z-50 glass border-b border-white/5">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-20">
+                <div class="flex-shrink-0 flex items-center gap-2 cursor-pointer" onclick="switchView('home')">
+                    <div class="w-8 h-8 rounded-lg bg-gradient-to-br from-mv-violet to-mv-neon flex items-center justify-center text-white font-bold text-lg">M</div>
+                    <span class="font-serif text-2xl font-bold tracking-wide text-white">Meghas<span class="text-gradient-gold">View</span></span>
+                </div>
+                <div class="hidden md:block">
+                    <div class="ml-10 flex items-baseline space-x-8">
+                        <button onclick="switchView('home')" class="hover:text-mv-neon px-3 py-2 rounded-md text-sm font-medium transition-colors">Discover</button>
+                        <button onclick="switchView('create')" class="hover:text-mv-neon px-3 py-2 rounded-md text-sm font-medium transition-colors">Create</button>
+                        <button onclick="switchView('explore')" class="hover:text-mv-neon px-3 py-2 rounded-md text-sm font-medium transition-colors">Marketplace</button>
+                        <button onclick="switchView('enterprise')" class="text-mv-gold hover:text-white px-3 py-2 rounded-md text-sm font-medium transition-colors">Enterprise</button>
+                        <button onclick="switchView('legal')" class="text-gray-400 hover:text-white px-3 py-2 rounded-md text-sm font-medium transition-colors">Legal & Safety</button>
+                        <button onclick="switchView('pitch')" class="text-mv-violet hover:text-white px-3 py-2 rounded-md text-sm font-medium transition-colors">Pitch Deck</button>
+                        <button onclick="switchView('categories')" class="text-mv-neon hover:text-white px-3 py-2 rounded-md text-sm font-medium transition-colors">Categories</button>
+                    </div>
+                </div>
+                <div class="hidden md:flex items-center gap-4">
+                    <button class="text-gray-400 hover:text-white transition-colors"><i class="fa-solid fa-bell"></i></button>
+                    <div class="h-8 w-8 rounded-full bg-gradient-to-r from-gray-700 to-gray-600 border border-white/20"></div>
+                </div>
+                <div class="-mr-2 flex md:hidden">
+                    <button type="button" class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none">
+                        <i class="fa-solid fa-bars text-xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content Area -->
+    <main class="pt-24 pb-12 min-h-screen relative">
+        
+        <!-- VIEW: HOME (Masonry Feed) -->
+        <section id="view-home" class="view-section max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 transition-opacity duration-500">
+            <div class="text-center mb-16 animate-float">
+                <h1 class="text-4xl md:text-6xl font-serif font-bold mb-4 text-white">
+                    Visuals as <span class="text-gradient-neon">Assets</span>.
+                </h1>
+                <p class="text-gray-400 max-w-2xl mx-auto text-lg">
+                    The premium AI creative economy. Own your prompts, monetize your vision.
+                </p>
+            </div>
+
+            <div class="flex overflow-x-auto gap-3 pb-6 mb-4 no-scrollbar">
+                <button class="px-6 py-2 rounded-full bg-white text-mv-black font-bold text-sm whitespace-nowrap">For You</button>
+                <button class="px-6 py-2 rounded-full glass text-gray-300 hover:text-white hover:border-mv-violet/50 transition-all text-sm whitespace-nowrap">Cinematic</button>
+                <button class="px-6 py-2 rounded-full glass text-gray-300 hover:text-white hover:border-mv-violet/50 transition-all text-sm whitespace-nowrap">Anime</button>
+                <button class="px-6 py-2 rounded-full glass text-gray-300 hover:text-white hover:border-mv-violet/50 transition-all text-sm whitespace-nowrap">Cyberpunk</button>
+                <button class="px-6 py-2 rounded-full glass text-gray-300 hover:text-white hover:border-mv-violet/50 transition-all text-sm whitespace-nowrap">Mythology</button>
+            </div>
+
+            <div class="masonry-grid" id="masonry-container"></div>
+
+            <div class="text-center mt-12">
+                <button id="load-more-btn" class="px-8 py-3 rounded-full glass hover:bg-white/10 text-white font-medium transition-all border border-white/10">
+                    Load More
+                </button>
+            </div>
+        </section>
+
+        <!-- VIEW: CREATE (AI Studio) -->
+        <section id="view-create" class="view-section hidden max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 h-[calc(100vh-140px)]">
+                <!-- Left: Controls -->
+                <div class="lg:col-span-4 glass rounded-2xl p-6 flex flex-col gap-6 overflow-y-auto">
+                    <div>
+                        <h2 class="text-2xl font-serif font-bold text-white mb-1">Prompt Studio</h2>
+                        <p class="text-xs text-gray-400 uppercase tracking-widest">Text-to-Image Engine</p>
+                    </div>
+                    <div class="space-y-2">
+                        <label class="text-sm text-gray-300 font-medium">Prompt</label>
+                        <textarea id="prompt-input" class="w-full bg-black/40 border border-white/10 rounded-xl p-4 text-white focus:outline-none focus:border-mv-violet transition-colors h-32 resize-none" placeholder="Describe your vision..."></textarea>
+                    </div>
+                    <div class="space-y-6">
+                        <div class="space-y-2">
+                            <label class="text-sm text-gray-300 font-medium">Style Pack</label>
+                            <div class="grid grid-cols-3 gap-2">
+                                <button class="style-btn active p-2 rounded-lg bg-mv-violet/20 border border-mv-violet text-xs text-center">Cinematic</button>
+                                <button class="style-btn p-2 rounded-lg bg-white/5 border border-white/10 hover:bg-white/10 text-xs text-center">Anime</button>
+                                <button class="style-btn p-2 rounded-lg bg-white/5 border border-white/10 hover:bg-white/10 text-xs text-center">Ghibli</button>
+                            </div>
+                        </div>
+                        <div class="space-y-4">
+                            <div>
+                                <div class="flex justify-between text-xs mb-1">
+                                    <span class="text-gray-400">Guidance Scale</span>
+                                    <span class="text-mv-neon">7.5</span>
+                                </div>
+                                <input type="range" min="1" max="20" value="7.5" step="0.5" class="w-full">
+                            </div>
+                        </div>
+                    </div>
+                    <button id="generate-btn" class="mt-auto w-full py-4 rounded-xl bg-gradient-to-r from-mv-violet to-indigo-600 text-white font-bold text-lg shadow-lg shadow-mv-violet/25 hover:shadow-mv-violet/40 hover:scale-[1.02] transition-all flex items-center justify-center gap-2">
+                        <i class="fa-solid fa-wand-magic-sparkles"></i> Generate
+                    </button>
+                </div>
+                <!-- Right: Preview -->
+                <div class="lg:col-span-8 glass rounded-2xl p-1 flex items-center justify-center relative bg-black/40 overflow-hidden group">
+                    <div id="preview-placeholder" class="text-center">
+                        <div class="w-20 h-20 rounded-full bg-white/5 flex items-center justify-center mx-auto mb-4 animate-pulse">
+                            <i class="fa-regular fa-image text-3xl text-gray-500"></i>
+                        </div>
+                        <p class="text-gray-500">Your masterpiece will appear here</p>
+                    </div>
+                    <div id="preview-loading" class="hidden absolute inset-0 bg-mv-black/80 z-10 flex flex-col items-center justify-center">
+                        <div class="loader mb-4"></div>
+                        <p class="text-mv-neon text-sm tracking-widest animate-pulse">DIFFUSING...</p>
+                    </div>
+                    <img id="preview-result" src="" alt="Generated Result" class="hidden w-full h-full object-contain rounded-xl shadow-2xl">
+                    <div id="result-actions" class="hidden absolute bottom-6 left-1/2 transform -translate-x-1/2 glass px-6 py-3 rounded-full flex gap-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                        <button class="text-white hover:text-mv-neon tooltip" title="Download"><i class="fa-solid fa-download"></i></button>
+                        <button class="text-white hover:text-mv-gold tooltip" title="Sell Prompt"><i class="fa-solid fa-tag"></i></button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- VIEW: EXPLORE (Marketplace) -->
+        <section id="view-explore" class="view-section hidden max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row justify-between items-end mb-8 gap-4">
+                <div>
+                    <h2 class="text-3xl font-serif font-bold text-white">Prompt Marketplace</h2>
+                    <p class="text-gray-400">Buy and sell high-performing AI assets.</p>
+                </div>
+                <div class="flex gap-2">
+                    <input type="text" placeholder="Search prompts..." class="bg-white/5 border border-white/10 rounded-lg px-4 py-2 text-white focus:outline-none focus:border-mv-violet">
+                    <button class="bg-mv-violet px-4 py-2 rounded-lg text-white font-medium hover:bg-mv-violet/80">Search</button>
+                </div>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="marketplace-grid"></div>
+        </section>
+
+        <!-- VIEW: ENTERPRISE (Projections & Schema) -->
+        <section id="view-enterprise" class="view-section hidden max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="mb-12">
+                <h2 class="text-4xl font-serif font-bold text-white mb-2">Enterprise & Projections</h2>
+                <p class="text-gray-400">Financial forecasting and system architecture.</p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-16">
+                <!-- Financial Projections -->
+                <div class="glass rounded-2xl p-8 border-t-4 border-mv-gold">
+                    <h3 class="text-2xl font-bold text-white mb-6 flex items-center gap-2">
+                        <i class="fa-solid fa-chart-line text-mv-gold"></i> 3-Year Projection
+                    </h3>
+                    <div class="space-y-6">
+                        <div class="flex items-center justify-between p-4 rounded-lg bg-white/5 border border-white/5 hover:border-mv-gold/30 transition-colors">
+                            <div>
+                                <p class="text-sm text-gray-400">Year 1 Revenue</p>
+                                <p class="text-xl font-bold text-white">$576,000</p>
+                            </div>
+                            <div class="text-right">
+                                <p class="text-xs text-gray-500">100k Users</p>
+                                <p class="text-xs text-mv-gold">8% Conversion</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center justify-between p-4 rounded-lg bg-white/5 border border-white/5 hover:border-mv-gold/30 transition-colors">
+                            <div>
+                                <p class="text-sm text-gray-400">Year 2 Revenue</p>
+                                <p class="text-xl font-bold text-white">$6.48M</p>
+                            </div>
+                            <div class="text-right">
+                                <p class="text-xs text-gray-500">500k Users</p>
+                                <p class="text-xs text-mv-gold">12% Conversion</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center justify-between p-4 rounded-lg bg-white/5 border border-white/5 hover:border-mv-gold/30 transition-colors">
+                            <div>
+                                <p class="text-sm text-gray-400">Year 3 Revenue</p>
+                                <p class="text-xl font-bold text-white">$51.8M</p>
+                            </div>
+                            <div class="text-right">
+                                <p class="text-xs text-gray-500">2M Users</p>
+                                <p class="text-xs text-mv-gold">18% Conversion</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Pricing Tiers -->
+                <div class="glass rounded-2xl p-8 border-t-4 border-mv-violet">
+                    <h3 class="text-2xl font-bold text-white mb-6 flex items-center gap-2">
+                        <i class="fa-solid fa-layer-group text-mv-violet"></i> Pricing Tiers
+                    </h3>
+                    <div class="space-y-4">
+                        <div class="flex justify-between items-center border-b border-white/10 pb-3">
+                            <span class="text-white font-medium">Viewer</span>
+                            <span class="text-gray-400">Free</span>
+                        </div>
+                        <div class="flex justify-between items-center border-b border-white/10 pb-3">
+                            <span class="text-white font-medium">Creator Pro</span>
+                            <span class="text-mv-gold font-bold">$15/mo</span>
+                        </div>
+                        <div class="flex justify-between items-center border-b border-white/10 pb-3">
+                            <span class="text-white font-medium">AI Power User</span>
+                            <span class="text-mv-gold font-bold">$29/mo</span>
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <span class="text-white font-medium">Enterprise</span>
+                            <span class="text-mv-neon font-bold">Custom</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Database Schema -->
+            <div class="glass rounded-2xl p-8 border border-white/10">
+                <h3 class="text-2xl font-bold text-white mb-6 flex items-center gap-2">
+                    <i class="fa-solid fa-database text-mv-neon"></i> Database Schema
+                </h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                    <div class="code-block">
+                        <p class="mb-2 text-white font-bold">USERS</p>
+                        <p><span class="code-keyword">PK</span> user_id</p>
+                        <p>name, email</p>
+                        <p>role (admin/creator)</p>
+                        <p>region, created_at</p>
+                    </div>
+                    <div class="code-block">
+                        <p class="mb-2 text-white font-bold">CONTENT</p>
+                        <p><span class="code-keyword">PK</span> content_id</p>
+                        <p><span class="code-type">FK</span> creator_id</p>
+                        <p>type (img/vid)</p>
+                        <p>title, thumbnail_url</p>
+                    </div>
+                    <div class="code-block">
+                        <p class="mb-2 text-white font-bold">PROMPTS</p>
+                        <p><span class="code-keyword">PK</span> prompt_id</p>
+                        <p><span class="code-type">FK</span> content_id</p>
+                        <p>prompt_text (enc)</p>
+                        <p>is_locked, price</p>
+                    </div>
+                    <div class="code-block">
+                        <p class="mb-2 text-white font-bold">TRANSACTIONS</p>
+                        <p><span class="code-keyword">PK</span> transaction_id</p>
+                        <p><span class="code-type">FK</span> user_id</p>
+                        <p>amount</p>
+                        <p>type (sub/prompt)</p>
+                    </div>
+                    <div class="code-block">
+                        <p class="mb-2 text-white font-bold">AI_USAGE</p>
+                        <p><span class="code-keyword">PK</span> usage_id</p>
+                        <p><span class="code-type">FK</span> user_id</p>
+                        <p>model_used</p>
+                        <p>credits_spent</p>
+                    </div>
+                    <div class="code-block">
+                        <p class="mb-2 text-white font-bold">RATINGS</p>
+                        <p><span class="code-keyword">PK</span> rating_id</p>
+                        <p><span class="code-type">FK</span> user_id</p>
+                        <p><span class="code-type">FK</span> content_id</p>
+                        <p>stars (1-5)</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- VIEW: LEGAL & SAFETY -->
+        <section id="view-legal" class="view-section hidden max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="mb-12">
+                <h2 class="text-4xl font-serif font-bold text-white mb-2">Legal & Safety</h2>
+                <p class="text-gray-400">Terms, Privacy, and AI Moderation Protocols.</p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                <!-- Terms -->
+                <div class="lg:col-span-2 glass rounded-2xl p-8">
+                    <h3 class="text-2xl font-bold text-white mb-6 border-b border-white/10 pb-4">Terms of Service</h3>
+                    <div class="space-y-6 text-sm text-gray-300 leading-relaxed">
+                        <div>
+                            <h4 class="text-white font-bold mb-2">1. Acceptance of Terms</h4>
+                            <p>By accessing or using MeghasView (“Platform”), you agree to be bound by these Terms. If you do not agree, you may not use the Platform.</p>
+                        </div>
+                        <div>
+                            <h4 class="text-white font-bold mb-2">4. Content Ownership</h4>
+                            <p>Creators retain full ownership of original content they upload. MeghasView receives a non-exclusive, worldwide, royalty-free license to display and distribute content on the Platform.</p>
+                        </div>
+                        <div>
+                            <h4 class="text-white font-bold mb-2">5. Prompts & IP</h4>
+                            <p>Prompts are treated as intellectual assets. Locked or paid prompts may not be copied, resold, or redistributed. Any attempt to bypass prompt protection results in immediate account termination.</p>
+                        </div>
+                        <div>
+                            <h4 class="text-white font-bold mb-2">6. Prohibited Content</h4>
+                            <p>Strictly prohibited: Illegal, explicit, abusive, hateful, or violent material; Copyright infringement; Deepfake impersonation; AI misuse or deceptive content. Violations result in permanent bans without refund.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Privacy -->
+                <div class="glass rounded-2xl p-8 border-t-4 border-mv-neon">
+                    <h3 class="text-xl font-bold text-white mb-6">Privacy Policy</h3>
+                    <ul class="space-y-4 text-sm text-gray-300">
+                        <li class="flex items-start gap-2">
+                            <i class="fa-solid fa-shield-halved text-mv-neon mt-1"></i>
+                            <span><strong>Data Protection:</strong> Encrypted storage, secure authentication, no sale of personal data.</span>
+                        </li>
+                        <li class="flex items-start gap-2">
+                            <i class="fa-solid fa-cookie-bite text-mv-neon mt-1"></i>
+                            <span><strong>Cookies:</strong> Used only for performance, analytics, and personalization.</span>
+                        </li>
+                        <li class="flex items-start gap-2">
+                            <i class="fa-solid fa-user-shield text-mv-neon mt-1"></i>
+                            <span><strong>User Rights:</strong> Users may request data access, deletion, or account termination.</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- AI Moderation System -->
+            <div class="mt-8 glass rounded-2xl p-8 border border-white/10">
+                <h3 class="text-2xl font-bold text-white mb-6 flex items-center gap-2">
+                    <i class="fa-solid fa-robot text-mv-violet"></i> AI Moderation & Safety System
+                </h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                    <div class="bg-white/5 p-4 rounded-lg border border-white/5">
+                        <h4 class="text-mv-neon font-bold mb-2">Pre-Generation</h4>
+                        <p class="text-xs text-gray-400">Prompt scanning for prohibited keywords and concepts.</p>
+                    </div>
+                    <div class="bg-white/5 p-4 rounded-lg border border-white/5">
+                        <h4 class="text-mv-neon font-bold mb-2">Post-Generation</h4>
+                        <p class="text-xs text-gray-400">AI visual review to detect NSFW or violent imagery.</p>
+                    </div>
+                    <div class="bg-white/5 p-4 rounded-lg border border-white/5">
+                        <h4 class="text-mv-neon font-bold mb-2">Prompt Security</h4>
+                        <p class="text-xs text-gray-400">Encrypted storage, similarity detection, and theft alerts.</p>
+                    </div>
+                    <div class="bg-white/5 p-4 rounded-lg border border-white/5">
+                        <h4 class="text-mv-neon font-bold mb-2">User Reporting</h4>
+                        <p class="text-xs text-gray-400">One-tap reporting with priority review for paid creators.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- VIEW: PITCH DECK -->
+        <section id="view-pitch" class="view-section hidden max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-[calc(100vh-140px)] flex flex-col">
+            <div class="flex justify-between items-center mb-6">
+                <h2 class="text-3xl font-serif font-bold text-white">Investor Pitch Deck</h2>
+                <div class="flex gap-2">
+                    <button onclick="changeSlide(-1)" class="w-10 h-10 rounded-full glass flex items-center justify-center hover:bg-white/10 text-white"><i class="fa-solid fa-chevron-left"></i></button>
+                    <button onclick="changeSlide(1)" class="w-10 h-10 rounded-full glass flex items-center justify-center hover:bg-white/10 text-white"><i class="fa-solid fa-chevron-right"></i></button>
+                </div>
+            </div>
+
+            <div class="slide-container flex-1 relative overflow-hidden rounded-2xl glass border border-white/10 p-8 md:p-12 flex items-center justify-center">
+                <!-- Slides -->
+                <div id="slide-1" class="slide active absolute inset-0 flex flex-col items-center justify-center text-center p-8">
+                    <h1 class="text-5xl md:text-7xl font-serif font-bold text-white mb-4">MeghasView</h1>
+                    <p class="text-2xl text-mv-gold font-light tracking-widest uppercase">The Premium AI Visual Economy</p>
+                </div>
+
+                <div id="slide-2" class="slide next absolute inset-0 flex flex-col items-center justify-center text-center p-8">
+                    <h2 class="text-4xl font-bold text-white mb-8">The Problem</h2>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-4xl">
+                        <div class="p-6 bg-white/5 rounded-xl border border-white/10">
+                            <i class="fa-solid fa-ban text-4xl text-red-500 mb-4"></i>
+                            <h3 class="text-xl font-bold text-white mb-2">No Ownership</h3>
+                            <p class="text-gray-400">Creators lack ownership of their digital assets and prompts.</p>
+                        </div>
+                        <div class="p-6 bg-white/5 rounded-xl border border-white/10">
+                            <i class="fa-solid fa-coins text-4xl text-gray-500 mb-4"></i>
+                            <h3 class="text-xl font-bold text-white mb-2">Zero Value</h3>
+                            <p class="text-gray-400">Prompts are treated as text, not monetizable intellectual property.</p>
+                        </div>
+                        <div class="p-6 bg-white/5 rounded-xl border border-white/10">
+                            <i class="fa-solid fa-volume-high text-4xl text-gray-500 mb-4"></i>
+                            <h3 class="text-xl font-bold text-white mb-2">Noisy Discovery</h3>
+                            <p class="text-gray-400">Current platforms are cluttered with low-quality content.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="slide-3" class="slide next absolute inset-0 flex flex-col items-center justify-center text-center p-8">
+                    <h2 class="text-4xl font-bold text-white mb-8">The Solution</h2>
+                    <div class="space-y-6 max-w-3xl">
+                        <div class="flex items-center gap-4 p-4 bg-white/5 rounded-xl border-l-4 border-mv-violet">
+                            <i class="fa-solid fa-film text-2xl text-mv-violet"></i>
+                            <p class="text-xl text-white text-left">Visuals are <span class="text-mv-violet font-bold">Cinematic</span></p>
+                        </div>
+                        <div class="flex items-center gap-4 p-4 bg-white/5 rounded-xl border-l-4 border-mv-gold">
+                            <i class="fa-solid fa-gem text-2xl text-mv-gold"></i>
+                            <p class="text-xl text-white text-left">Prompts are <span class="text-mv-gold font-bold">Assets</span></p>
+                        </div>
+                        <div class="flex items-center gap-4 p-4 bg-white/5 rounded-xl border-l-4 border-mv-neon">
+                            <i class="fa-solid fa-hand-holding-dollar text-2xl text-mv-neon"></i>
+                            <p class="text-xl text-white text-left">Creators <span class="text-mv-neon font-bold">Earn Fairly</span></p>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="slide-4" class="slide next absolute inset-0 flex flex-col items-center justify-center text-center p-8">
+                    <h2 class="text-4xl font-bold text-white mb-8">Product</h2>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl">
+                        <div class="p-6 glass rounded-xl">
+                            <i class="fa-solid fa-grip text-3xl text-white mb-4"></i>
+                            <h3 class="text-lg font-bold text-white">Pinterest-Style Discovery</h3>
+                        </div>
+                        <div class="p-6 glass rounded-xl">
+                            <i class="fa-solid fa-wand-magic-sparkles text-3xl text-white mb-4"></i>
+                            <h3 class="text-lg font-bold text-white">AI Generation</h3>
+                        </div>
+                        <div class="p-6 glass rounded-xl">
+                            <i class="fa-solid fa-sack-dollar text-3xl text-white mb-4"></i>
+                            <h3 class="text-lg font-bold text-white">Monetization System</h3>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="slide-5" class="slide next absolute inset-0 flex flex-col items-center justify-center text-center p-8">
+                    <h2 class="text-4xl font-bold text-white mb-8">Technology</h2>
+                    <ul class="text-xl text-gray-300 space-y-4 list-disc list-inside">
+                        <li>Advanced AI pipelines (Diffusion & Transformers)</li>
+                        <li>Proprietary Prompt Protection Encryption</li>
+                        <li>Scalable Cloud Architecture (Microservices)</li>
+                    </ul>
+                </div>
+
+                <div id="slide-6" class="slide next absolute inset-0 flex flex-col items-center justify-center text-center p-8">
+                    <h2 class="text-4xl font-bold text-white mb-8">Business Model</h2>
+                    <div class="flex flex-wrap justify-center gap-4">
+                        <span class="px-6 py-3 rounded-full bg-mv-violet/20 border border-mv-violet text-white font-bold">Subscriptions</span>
+                        <span class="px-6 py-3 rounded-full bg-mv-gold/20 border border-mv-gold text-white font-bold">Prompt Sales</span>
+                        <span class="px-6 py-3 rounded-full bg-mv-neon/20 border border-mv-neon text-white font-bold">AI Credits</span>
+                        <span class="px-6 py-3 rounded-full bg-white/10 border border-white text-white font-bold">Enterprise</span>
+                    </div>
+                </div>
+
+                <div id="slide-7" class="slide next absolute inset-0 flex flex-col items-center justify-center text-center p-8">
+                    <h2 class="text-4xl font-bold text-white mb-8">Market</h2>
+                    <div class="text-6xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-mv-violet to-mv-neon mb-4">$100B+</div>
+                    <p class="text-xl text-gray-300">AI Creator Economy Opportunity</p>
+                </div>
+
+                <div id="slide-8" class="slide next absolute inset-0 flex flex-col items-center justify-center text-center p-8">
+                    <h2 class="text-4xl font-bold text-white mb-8">Traction Strategy</h2>
+                    <div class="space-y-4 text-left max-w-2xl">
+                        <div class="flex items-center gap-4">
+                            <span class="w-8 h-8 rounded-full bg-white text-black flex items-center justify-center font-bold">1</span>
+                            <p class="text-lg text-white">Invite-only creators (Quality Control)</p>
+                        </div>
+                        <div class="flex items-center gap-4">
+                            <span class="w-8 h-8 rounded-full bg-white text-black flex items-center justify-center font-bold">2</span>
+                            <p class="text-lg text-white">Premium positioning (Luxury Brand)</p>
+                        </div>
+                        <div class="flex items-center gap-4">
+                            <span class="w-8 h-8 rounded-full bg-white text-black flex items-center justify-center font-bold">3</span>
+                            <p class="text-lg text-white">Creator-first growth (Revenue Share)</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="slide-9" class="slide next absolute inset-0 flex flex-col items-center justify-center text-center p-8">
+                    <h2 class="text-4xl font-bold text-white mb-8">Competitive Edge</h2>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-3xl">
+                        <div class="text-red-500 text-2xl line-through opacity-50">Social Media</div>
+                        <div class="text-red-500 text-2xl line-through opacity-50">Generic AI</div>
+                        <div class="col-span-1 md:col-span-2 p-6 border-2 border-mv-gold rounded-xl">
+                            <p class="text-3xl font-bold text-mv-gold">Curated Premium Ecosystem</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="slide-10" class="slide next absolute inset-0 flex flex-col items-center justify-center text-center p-8">
+                    <h2 class="text-4xl font-bold text-white mb-4">Vision</h2>
+                    <p class="text-2xl text-gray-300 italic">"The world’s most trusted AI visual platform."</p>
+                    <div class="mt-12">
+                        <button onclick="switchView('enterprise')" class="px-8 py-3 bg-white text-black font-bold rounded-full hover:bg-gray-200 transition-colors">View Projections</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- VIEW: CATEGORIES (New Signature System) -->
+        <section id="view-categories" class="view-section hidden max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl md:text-6xl font-serif font-bold mb-4 text-white">
+                    Signature <span class="text-gradient-neon">Realms</span>
+                </h2>
+                <p class="text-gray-400 max-w-2xl mx-auto text-lg">
+                    Organized by feeling, intention, and visual language.
+                </p>
+            </div>
+
+            <div class="space-y-16">
+                <!-- 1. Signature Visual Realms -->
+                <div>
+                    <h3 class="text-2xl font-bold text-white mb-6 flex items-center gap-3">
+                        <span class="w-2 h-8 bg-mv-violet rounded-full"></span> 1. Signature Visual Realms
+                    </h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="glass-card p-6 rounded-2xl border border-white/5 hover:border-mv-violet/30 group">
+                            <div class="flex items-center gap-4 mb-4">
+                                <div class="w-12 h-12 rounded-full bg-gradient-to-br from-pink-300 to-purple-400 flex items-center justify-center text-white text-xl">
+                                    <i class="fa-solid fa-sparkles"></i>
+                                </div>
+                                <div>
+                                    <h4 class="text-xl font-bold text-white group-hover:text-mv-violet transition-colors">Ethereal Realms</h4>
+                                    <p class="text-xs text-gray-400 uppercase tracking-widest">Softness & Light</p>
+                                </div>
+                            </div>
+                            <p class="text-gray-300 text-sm mb-4">Prompts focused on softness, light, air, emotion, and dreamlike visuals.</p>
+                            <div class="flex flex-wrap gap-2">
+                                <span class="px-2 py-1 bg-white/5 rounded text-xs text-gray-400">soft glow</span>
+                                <span class="px-2 py-1 bg-white/5 rounded text-xs text-gray-400">diffused light</span>
+                                <span class="px-2 py-1 bg-white/5 rounded text-xs text-gray-400">cinematic calm</span>
+                            </div>
+                        </div>
+                        <div class="glass-card p-6 rounded-2xl border border-white/5 hover:border-mv-violet/30 group">
+                            <div class="flex items-center gap-4 mb-4">
+                                <div class="w-12 h-12 rounded-full bg-gradient-to-br from-orange-400 to-red-500 flex items-center justify-center text-white text-xl">
+                                    <i class="fa-solid fa-fire"></i>
+                                </div>
+                                <div>
+                                    <h4 class="text-xl font-bold text-white group-hover:text-mv-violet transition-colors">Monumental Frames</h4>
+                                    <p class="text-xs text-gray-400 uppercase tracking-widest">Power & Boldness</p>
+                                </div>
+                            </div>
+                            <p class="text-gray-300 text-sm mb-4">Powerful, bold, dramatic compositions that feel grand and unforgettable.</p>
+                            <div class="flex flex-wrap gap-2">
+                                <span class="px-2 py-1 bg-white/5 rounded text-xs text-gray-400">high contrast</span>
+                                <span class="px-2 py-1 bg-white/5 rounded text-xs text-gray-400">epic scale</span>
+                                <span class="px-2 py-1 bg-white/5 rounded text-xs text-gray-400">dramatic shadows</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 2. Art & Story Expression -->
+                <div>
+                    <h3 class="text-2xl font-bold text-white mb-6 flex items-center gap-3">
+                        <span class="w-2 h-8 bg-mv-gold rounded-full"></span> 2. Art & Story Expression
+                    </h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="glass-card p-6 rounded-2xl border border-white/5 hover:border-mv-gold/30 group">
+                            <div class="flex items-center gap-4 mb-4">
+                                <div class="w-12 h-12 rounded-full bg-gradient-to-br from-yellow-200 to-yellow-600 flex items-center justify-center text-white text-xl">
+                                    <i class="fa-solid fa-palette"></i>
+                                </div>
+                                <div>
+                                    <h4 class="text-xl font-bold text-white group-hover:text-mv-gold transition-colors">Painter’s Memory</h4>
+                                    <p class="text-xs text-gray-400 uppercase tracking-widest">Hand-Crafted & Nostalgic</p>
+                                </div>
+                            </div>
+                            <p class="text-gray-300 text-sm mb-4">Art that feels hand-crafted, nostalgic, and soulful.</p>
+                            <div class="flex flex-wrap gap-2">
+                                <span class="px-2 py-1 bg-white/5 rounded text-xs text-gray-400">brush texture</span>
+                                <span class="px-2 py-1 bg-white/5 rounded text-xs text-gray-400">warm tones</span>
+                            </div>
+                        </div>
+                        <div class="glass-card p-6 rounded-2xl border border-white/5 hover:border-mv-gold/30 group">
+                            <div class="flex items-center gap-4 mb-4">
+                                <div class="w-12 h-12 rounded-full bg-gradient-to-br from-blue-400 to-indigo-600 flex items-center justify-center text-white text-xl">
+                                    <i class="fa-solid fa-brain"></i>
+                                </div>
+                                <div>
+                                    <h4 class="text-xl font-bold text-white group-hover:text-mv-gold transition-colors">Concept Genesis</h4>
+                                    <p class="text-xs text-gray-400 uppercase tracking-widest">Experimental & High-Idea</p>
+                                </div>
+                            </div>
+                            <p class="text-gray-300 text-sm mb-4">Experimental, high-idea visuals meant to explore imagination.</p>
+                            <div class="flex flex-wrap gap-2">
+                                <span class="px-2 py-1 bg-white/5 rounded text-xs text-gray-400">concept-driven</span>
+                                <span class="px-2 py-1 bg-white/5 rounded text-xs text-gray-400">symbolic</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 3. Motion & Cinematic Language -->
+                <div>
+                    <h3 class="text-2xl font-bold text-white mb-6 flex items-center gap-3">
+                        <span class="w-2 h-8 bg-mv-neon rounded-full"></span> 3. Motion & Cinematic Language
+                    </h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="glass-card p-6 rounded-2xl border border-white/5 hover:border-mv-neon/30 group">
+                            <div class="flex items-center gap-4 mb-4">
+                                <div class="w-12 h-12 rounded-full bg-gradient-to-br from-gray-600 to-gray-900 flex items-center justify-center text-white text-xl">
+                                    <i class="fa-solid fa-film"></i>
+                                </div>
+                                <div>
+                                    <h4 class="text-xl font-bold text-white group-hover:text-mv-neon transition-colors">Silent Cinema</h4>
+                                    <p class="text-xs text-gray-400 uppercase tracking-widest">Emotion-Driven Motion</p>
+                                </div>
+                            </div>
+                            <p class="text-gray-300 text-sm mb-4">Emotion-driven motion with minimal action and maximum feeling.</p>
+                            <div class="flex flex-wrap gap-2">
+                                <span class="px-2 py-1 bg-white/5 rounded text-xs text-gray-400">slow camera</span>
+                                <span class="px-2 py-1 bg-white/5 rounded text-xs text-gray-400">ambient motion</span>
+                            </div>
+                        </div>
+                        <div class="glass-card p-6 rounded-2xl border border-white/5 hover:border-mv-neon/30 group">
+                            <div class="flex items-center gap-4 mb-4">
+                                <div class="w-12 h-12 rounded-full bg-gradient-to-br from-cyan-400 to-blue-600 flex items-center justify-center text-white text-xl">
+                                    <i class="fa-solid fa-bolt"></i>
+                                </div>
+                                <div>
+                                    <h4 class="text-xl font-bold text-white group-hover:text-mv-neon transition-colors">Dynamic Cuts</h4>
+                                    <p class="text-xs text-gray-400 uppercase tracking-widest">High-Energy Modern Motion</p>
+                                </div>
+                            </div>
+                            <p class="text-gray-300 text-sm mb-4">High-energy, modern motion language for visual impact.</p>
+                            <div class="flex flex-wrap gap-2">
+                                <span class="px-2 py-1 bg-white/5 rounded text-xs text-gray-400">sharp transitions</span>
+                                <span class="px-2 py-1 bg-white/5 rounded text-xs text-gray-400">motion blur</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 4. Beauty & Human Aesthetics -->
+                <div>
+                    <h3 class="text-2xl font-bold text-white mb-6 flex items-center gap-3">
+                        <span class="w-2 h-8 bg-pink-500 rounded-full"></span> 4. Beauty & Human Aesthetics
+                    </h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="glass-card p-6 rounded-2xl border border-white/5 hover:border-pink-500/30 group">
+                            <div class="flex items-center gap-4 mb-4">
+                                <div class="w-12 h-12 rounded-full bg-gradient-to-br from-rose-200 to-rose-400 flex items-center justify-center text-white text-xl">
+                                    <i class="fa-solid fa-leaf"></i>
+                                </div>
+                                <div>
+                                    <h4 class="text-xl font-bold text-white group-hover:text-pink-400 transition-colors">Pure Form</h4>
+                                    <p class="text-xs text-gray-400 uppercase tracking-widest">Clean & Refined</p>
+                                </div>
+                            </div>
+                            <p class="text-gray-300 text-sm mb-4">Clean, refined human beauty without exaggeration.</p>
+                            <div class="flex flex-wrap gap-2">
+                                <span class="px-2 py-1 bg-white/5 rounded text-xs text-gray-400">natural tones</span>
+                                <span class="px-2 py-1 bg-white/5 rounded text-xs text-gray-400">balanced lighting</span>
+                            </div>
+                        </div>
+                        <div class="glass-card p-6 rounded-2xl border border-white/5 hover:border-pink-500/30 group">
+                            <div class="flex items-center gap-4 mb-4">
+                                <div class="w-12 h-12 rounded-full bg-gradient-to-br from-purple-500 to-pink-600 flex items-center justify-center text-white text-xl">
+                                    <i class="fa-solid fa-gem"></i>
+                                </div>
+                                <div>
+                                    <h4 class="text-xl font-bold text-white group-hover:text-pink-400 transition-colors">Editorial Muse</h4>
+                                    <p class="text-xs text-gray-400 uppercase tracking-widest">High-Fashion & Luxury</p>
+                                </div>
+                            </div>
+                            <p class="text-gray-300 text-sm mb-4">High-fashion, magazine-cover-level beauty.</p>
+                            <div class="flex flex-wrap gap-2">
+                                <span class="px-2 py-1 bg-white/5 rounded text-xs text-gray-400">studio lighting</span>
+                                <span class="px-2 py-1 bg-white/5 rounded text-xs text-gray-400">sculpted features</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 5. Food & Drink -->
+                <div>
+                    <h3 class="text-2xl font-bold text-white mb-6 flex items-center gap-3">
+                        <span class="w-2 h-8 bg-orange-500 rounded-full"></span> 5. Food & Drink — Sensory Design
+                    </h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="glass-card p-6 rounded-2xl border border-white/5 hover:border-orange-500/30 group">
+                            <div class="flex items-center gap-4 mb-4">
+                                <div class="w-12 h-12 rounded-full bg-gradient-to-br from-amber-300 to-orange-600 flex items-center justify-center text-white text-xl">
+                                    <i class="fa-solid fa-utensils"></i>
+                                </div>
+                                <div>
+                                    <h4 class="text-xl font-bold text-white group-hover:text-orange-400 transition-colors">Crafted Indulgence</h4>
+                                    <p class="text-xs text-gray-400 uppercase tracking-widest">Luxury Art</p>
+                                </div>
+                            </div>
+                            <p class="text-gray-300 text-sm mb-4">Food as luxury art.</p>
+                            <div class="flex flex-wrap gap-2">
+                                <span class="px-2 py-1 bg-white/5 rounded text-xs text-gray-400">rich textures</span>
+                                <span class="px-2 py-1 bg-white/5 rounded text-xs text-gray-400">dramatic lighting</span>
+                            </div>
+                        </div>
+                        <div class="glass-card p-6 rounded-2xl border border-white/5 hover:border-orange-500/30 group">
+                            <div class="flex items-center gap-4 mb-4">
+                                <div class="w-12 h-12 rounded-full bg-gradient-to-br from-green-400 to-green-700 flex items-center justify-center text-white text-xl">
+                                    <i class="fa-solid fa-seedling"></i>
+                                </div>
+                                <div>
+                                    <h4 class="text-xl font-bold text-white group-hover:text-orange-400 transition-colors">Honest Flavors</h4>
+                                    <p class="text-xs text-gray-400 uppercase tracking-widest">Simple & Authentic</p>
+                                </div>
+                            </div>
+                            <p class="text-gray-300 text-sm mb-4">Simple, comforting, human-centered food visuals.</p>
+                            <div class="flex flex-wrap gap-2">
+                                <span class="px-2 py-1 bg-white/5 rounded text-xs text-gray-400">natural light</span>
+                                <span class="px-2 py-1 bg-white/5 rounded text-xs text-gray-400">real textures</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 6. Home & Space Aesthetics -->
+                <div>
+                    <h3 class="text-2xl font-bold text-white mb-6 flex items-center gap-3">
+                        <span class="w-2 h-8 bg-teal-500 rounded-full"></span> 6. Home & Space Aesthetics
+                    </h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="glass-card p-6 rounded-2xl border border-white/5 hover:border-teal-500/30 group">
+                            <div class="flex items-center gap-4 mb-4">
+                                <div class="w-12 h-12 rounded-full bg-gradient-to-br from-gray-200 to-gray-500 flex items-center justify-center text-white text-xl">
+                                    <i class="fa-solid fa-couch"></i>
+                                </div>
+                                <div>
+                                    <h4 class="text-xl font-bold text-white group-hover:text-teal-400 transition-colors">Quiet Luxury Living</h4>
+                                    <p class="text-xs text-gray-400 uppercase tracking-widest">Expensive & Quiet</p>
+                                </div>
+                            </div>
+                            <p class="text-gray-300 text-sm mb-4">Spaces that feel expensive without being loud.</p>
+                            <div class="flex flex-wrap gap-2">
+                                <span class="px-2 py-1 bg-white/5 rounded text-xs text-gray-400">neutral palette</span>
+                                <span class="px-2 py-1 bg-white/5 rounded text-xs text-gray-400">soft shadows</span>
+                            </div>
+                        </div>
+                        <div class="glass-card p-6 rounded-2xl border border-white/5 hover:border-teal-500/30 group">
+                            <div class="flex items-center gap-4 mb-4">
+                                <div class="w-12 h-12 rounded-full bg-gradient-to-br from-yellow-600 to-yellow-800 flex items-center justify-center text-white text-xl">
+                                    <i class="fa-solid fa-house-chimney"></i>
+                                </div>
+                                <div>
+                                    <h4 class="text-xl font-bold text-white group-hover:text-teal-400 transition-colors">Soulful Spaces</h4>
+                                    <p class="text-xs text-gray-400 uppercase tracking-widest">Lived-in & Warm</p>
+                                </div>
+                            </div>
+                            <p class="text-gray-300 text-sm mb-4">Homes that feel lived-in, warm, and human.</p>
+                            <div class="flex flex-wrap gap-2">
+                                <span class="px-2 py-1 bg-white/5 rounded text-xs text-gray-400">warm light</span>
+                                <span class="px-2 py-1 bg-white/5 rounded text-xs text-gray-400">layered textures</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 7. Fashion -->
+                <div>
+                    <h3 class="text-2xl font-bold text-white mb-6 flex items-center gap-3">
+                        <span class="w-2 h-8 bg-indigo-500 rounded-full"></span> 7. Fashion — Women & Men
+                    </h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="glass-card p-6 rounded-2xl border border-white/5 hover:border-indigo-500/30 group">
+                            <div class="flex items-center gap-4 mb-4">
+                                <div class="w-12 h-12 rounded-full bg-gradient-to-br from-indigo-400 to-purple-600 flex items-center justify-center text-white text-xl">
+                                    <i class="fa-solid fa-person-dress"></i>
+                                </div>
+                                <div>
+                                    <h4 class="text-xl font-bold text-white group-hover:text-indigo-400 transition-colors">Statement Silhouettes</h4>
+                                    <p class="text-xs text-gray-400 uppercase tracking-widest">Power & Identity</p>
+                                </div>
+                            </div>
+                            <p class="text-gray-300 text-sm mb-4">Fashion as power and identity.</p>
+                            <div class="flex flex-wrap gap-2">
+                                <span class="px-2 py-1 bg-white/5 rounded text-xs text-gray-400">strong poses</span>
+                                <span class="px-2 py-1 bg-white/5 rounded text-xs text-gray-400">clean lines</span>
+                            </div>
+                        </div>
+                        <div class="glass-card p-6 rounded-2xl border border-white/5 hover:border-indigo-500/30 group">
+                            <div class="flex items-center gap-4 mb-4">
+                                <div class="w-12 h-12 rounded-full bg-gradient-to-br from-blue-300 to-blue-600 flex items-center justify-center text-white text-xl">
+                                    <i class="fa-solid fa-shirt"></i>
+                                </div>
+                                <div>
+                                    <h4 class="text-xl font-bold text-white group-hover:text-indigo-400 transition-colors">Effortless Form</h4>
+                                    <p class="text-xs text-gray-400 uppercase tracking-widest">Natural & Wearable</p>
+                                </div>
+                            </div>
+                            <p class="text-gray-300 text-sm mb-4">Fashion that feels natural and wearable.</p>
+                            <tab class="flex flex-wrap gap-2">
+                                <span class="px-2 py-1 bg-white/5 rounded text-xs text-gray-400">relaxed posture</span>
+                                <span class="px-2 py-1 bg-white/5 rounded text-xs text-gray-400">natural light</span>
+                            </tab>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 8. Storybook & Character Aesthetics -->
+                <div>
+                    <h3 class="text-2xl font-bold text-white mb-6 flex items-center gap-3">
+                        <span class="w-2 h-8 bg-red-400 rounded-full"></span> 8. Storybook & Character Aesthetics
+                    </h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="glass-card p-6 rounded-2xl border border-white/5 hover:border-red-400/30 group">
+                            <div class="flex items-center gap-4 mb-4">
+                                <div class="w-12 h-12 rounded-full bg-gradient-to-br from-pink-300 to-red-400 flex items-center justify-center text-white text-xl">
+                                    <i class="fa-solid fa-book-open"></i>
+                                </div>
+                                <div>
+                                    <h4 class="text-xl font-bold text-white group-hover:text-red-400 transition-colors">Gentle Storybook Style</h4>
+                                    <p class="text-xs text-gray-400 uppercase tracking-widest">Soft & Illustrative</p>
+                                </div>
+                            </div>
+                            <p class="text-gray-300 text-sm mb-4">Soft, emotional, illustrative visuals.</p>
+                            <div class="flex flex-wrap gap-2">
+                                <span class="px-2 py-1 bg-white/5 rounded text-xs text-gray-400">pastel tones</span>
+                                <span class="px-2 py-1 bg-white/5 rounded text-xs text-gray-400">soft outlines</span>
+                            </div>
+                        </div>
+                        <div class="glass-card p-6 rounded-2xl border border-white/5 hover:border-red-400/30 group">
+                            <div class="flex items-center gap-4 mb-4">
+                                <div class="w-12 h-12 rounded-full bg-gradient-to-br from-cyan-300 to-blue-500 flex items-center justify-center text-white text-xl">
+                                    <i class="fa-solid fa-cube"></i>
+                                </div>
+                                <div>
+                                    <h4 class="text-xl font-bold text-white group-hover:text-red-400 transition-colors">Expressive 3D Charm</h4>
+                                    <p class="text-xs text-gray-400 uppercase tracking-widest">Playful & Polished</p>
+                                </div>
+                            </div>
+                            <p class="text-gray-300 text-sm mb-4">Playful, polished, family-friendly 3D animation style.</p>
+                            <div class="flex flex-wrap gap-2">
+                                <span class="px-2 py-1 bg-white/5 rounded text-xs text-gray-400">rounded forms</span>
+                                <span class="px-2 py-1 bg-white/5 rounded text-xs text-gray-400">expressive faces</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 9. Master Prompt Intelligence Layers -->
+                <div class="glass p-8 rounded-2xl border border-white/10 mt-12">
+                    <h3 class="text-2xl font-bold text-white mb-6 flex items-center gap-2">
+                        <i class="fa-solid fa-brain text-mv-violet"></i> Master Prompt Intelligence Layers
+                    </h3>
+                    <p class="text-gray-300 mb-6">Every prompt includes these layers to ensure consistent premium output.</p>
+                    <div class="grid grid-cols-2 md:grid-cols-5 gap-4">
+                        <div class="bg-white/5 p-4 rounded-lg text-center border border-white/5">
+                            <i class="fa-solid fa-face-smile text-mv-neon text-2xl mb-2"></i>
+                            <p class="text-sm font-bold text-white">Mood</p>
+                        </div>
+                        <div class="bg-white/5 p-4 rounded-lg text-center border border-white/5">
+                            <i class="fa-solid fa-lightbulb text-mv-gold text-2xl mb-2"></i>
+                            <p class="text-sm font-bold text-white">Light</p>
+                        </div>
+                        <div class="bg-white/5 p-4 rounded-lg text-center border border-white/5">
+                            <i class="fa-solid fa-fingerprint text-mv-violet text-2xl mb-2"></i>
+                            <p class="text-sm font-bold text-white">Texture</p>
+                        </div>
+                        <div class="bg-white/5 p-4 rounded-lg text-center border border-white/5">
+                            <i class="fa-solid fa-heart text-pink-500 text-2xl mb-2"></i>
+                            <p class="text-sm font-bold text-white">Emotion</p>
+                        </div>
+                        <div class="bg-white/5 p-4 rounded-lg text-center border border-white/5">
+                            <i class="fa-solid fa-video text-blue-500 text-2xl mb-2"></i>
+                            <p class="text-sm font-bold text-white">Motion</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Modal (Prompt Detail) -->
+    <div id="modal" class="fixed inset-0 z-[100] hidden">
+        <div class="absolute inset-0 bg-black/90 backdrop-blur-sm" onclick="closeModal()"></div>
+        <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full max-w-4xl px-4">
+            <div class="glass rounded-2xl overflow-hidden shadow-2xl border border-white/10 flex flex-col md:flex-row max-h-[90vh]">
+                <div class="md:w-2/3 bg-black/50 relative">
+                    <img id="modal-img" src="" class="w-full h-full object-contain max-h-[50vh] md:max-h-[90vh]">
+                    <button onclick="closeModal()" class="absolute top-4 right-4 w-10 h-10 rounded-full bg-black/50 text-white hover:bg-white hover:text-black transition-all flex items-center justify-center">
+                        <i class="fa-solid fa-xmark"></i>
+                    </button>
+                </div>
+                <div class="md:w-1/3 p-6 flex flex-col bg-mv-charcoal">
+                    <div class="flex items-center gap-3 mb-4">
+                        <div class="w-10 h-10 rounded-full bg-gradient-to-tr from-mv-violet to-blue-500"></div>
+                        <div>
+                            <h4 class="text-white font-bold text-sm">@CreatorName</h4>
+                            <p class="text-xs text-gray-500">Pro Creator</p>
+                        </div>
+                        <button class="ml-auto text-mv-violet text-sm font-bold border border-mv-violet px-3 py-1 rounded-full hover:bg-mv-violet hover:text-white transition-all">Follow</button>
+                    </div>
+                    <h3 class="text-xl font-serif text-white mb-2" id="modal-title">Neon Cyberpunk City</h3>
+                    <div class="bg-black/30 rounded-lg p-3 mb-6 border border-white/5">
+                        <p class="text-xs text-gray-500 uppercase mb-1">Prompt</p>
+                        <p class="text-sm text-gray-300 font-mono leading-relaxed" id="modal-prompt">A futuristic city with neon lights...</p>
+                        <button class="mt-2 text-xs text-mv-neon hover:underline flex items-center gap-1">
+                            <i class="fa-solid fa-lock"></i> Unlock Full Prompt ($2.00)
+                        </button>
+                    </div>
+                    <div class="mt-auto">
+                        <button class="w-full py-3 bg-white text-black font-bold rounded-lg hover:bg-gray-200 transition-colors">Use as Reference</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript Logic -->
+    <script>
+        const images = [
+            { id: 1, url: 'https://picsum.photos/seed/cyber1/600/800', title: 'Neon Nights', prompt: 'Cyberpunk street, rain, neon reflections, cinematic lighting', user: 'NeonDreamer', price: 0 },
+            { id: 2, url: 'https://picsum.photos/seed/anime1/600/600', title: 'Spirit Forest', prompt: 'Ghibli style forest, spirits, soft sunlight, detailed leaves', user: 'ArtVibe', price: 5 },
+            { id: 3, url: 'https://picsum.photos/seed/myth1/600/900', title: 'Zeus Rising', prompt: 'Greek mythology, Zeus, thunder, dramatic clouds, oil painting style', user: 'MythMaker', price: 12 },
+            { id: 4, url: 'https://picsum.photos/seed/real1/600/700', title: 'Urban Solitude', prompt: 'Man in trench coat, black and white, rainy city street, noir', user: 'NoirFan', price: 0 },
+            { id: 5, url: 'https://picsum.photos/seed/space1/600/600', title: 'Nebula Voyager', prompt: 'Spaceship flying through nebula, purple and blue stars, 8k render', user: 'SpaceCadet', price: 3 },
+            { id: 6, url: 'https://picsum.photos/seed/arch1/600/850', title: 'Glass Future', prompt: 'Futuristic architecture, glass and steel, minimal, bright day', user: 'ArchAI', price: 8 },
+        ];
+
+        const marketplaceItems = [
+            { id: 101, title: 'Cinematic Lighting Pack', author: 'ProMpts', sales: 450, rating: 4.9, price: 19.99, tags: ['Lighting', 'Cinematic'] },
+            { id: 102, title: 'Anime Eyes Master', author: 'MangaAI', sales: 1200, rating: 5.0, price: 9.99, tags: ['Anime', 'Eyes'] },
+            { id: 103, title: 'Realistic Skin Texture', author: 'RenderGod', sales: 89, rating: 4.7, price: 24.99, tags: ['Texture', 'Realism'] },
+        ];
+
+        let currentSlide = 1;
+        const totalSlides = 10;
+
+        document.addEventListener('DOMContentLoaded', () => {
+            renderMasonry();
+            renderMarketplace();
+        });
+
+        function switchView(viewName) {
+            document.querySelectorAll('.view-section').forEach(el => {
+                el.classList.add('hidden');
+                el.classList.remove('animate-fade-in');
+            });
+            const selected = document.getElementById(`view-${viewName}`);
+            selected.classList.remove('hidden');
+            selected.classList.add('animate-fade-in');
+            window.scrollTo(0,0);
+        }
+
+        function renderMasonry() {
+            const container = document.getElementById('masonry-container');
+            container.innerHTML = images.map(img => `
+                <div class="masonry-item relative group cursor-pointer" onclick="openModal(${img.id})">
+                    <div class="glass-card rounded-2xl overflow-hidden relative">
+                        <img src="${img.url}" alt="${img.title}" class="w-full h-auto object-cover transform transition-transform duration-700 group-hover:scale-110">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-4">
+                            <div class="transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
+                                <h3 class="text-white font-bold text-lg leading-tight mb-1">${img.title}</h3>
+                                <div class="flex items-center justify-between">
+                                    <span class="text-xs text-gray-300">by @${img.user}</span>
+                                    ${img.price > 0 ? `<span class="text-xs bg-mv-gold text-black px-2 py-0.5 rounded font-bold">$${img.price}</span>` : ''}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function renderMarketplace() {
+            const grid = document.getElementById('marketplace-grid');
+            grid.innerHTML = marketplaceItems.map(item => `
+                <div class="glass-card rounded-2xl p-6 flex flex-col h-full">
+                    <div class="flex justify-between items-start mb-4">
+                        <div class="w-12 h-12 rounded-full bg-gradient-to-br from-gray-700 to-gray-600 flex items-center justify-center text-xl font-bold text-white">
+                            ${item.author.charAt(0)}
+                        </div>
+                        <div class="flex items-center gap-1 text-mv-gold">
+                            <i class="fa-solid fa-star text-xs"></i>
+                            <span class="text-sm font-bold">${item.rating}</span>
+                        </div>
+                    </div>
+                    <h3 class="text-xl font-serif font-bold text-white mb-2">${item.title}</h3>
+                    <p class="text-sm text-gray-400 mb-4">by ${item.author}</p>
+                    <div class="flex flex-wrap gap-2 mb-6">
+                        ${item.tags.map(tag => `<span class="text-xs bg-white/5 border border-white/10 px-2 py-1 rounded text-gray-400">${tag}</span>`).join('')}
+                    </div>
+                    <div class="mt-auto flex items-center justify-between pt-4 border-t border-white/5">
+                        <div>
+                            <p class="text-xs text-gray-500">Price</p>
+                            <p class="text-lg font-bold text-white">$${item.price}</p>
+                        </div>
+                        <button class="bg-white text-black px-4 py-2 rounded-lg text-sm font-bold hover:bg-gray-200 transition-colors">Buy Now</button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function openModal(id) {
+            const img = images.find(i => i.id === id);
+            if (!img) return;
+            document.getElementById('modal-img').src = img.url;
+            document.getElementById('modal-title').innerText = img.title;
+            document.getElementById('modal-prompt').innerText = img.prompt;
+            document.getElementById('modal').classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal() {
+            document.getElementById('modal').classList.add('hidden');
+            document.body.style.overflow = 'auto';
+        }
+
+        document.getElementById('generate-btn').addEventListener('click', () => {
+            const promptInput = document.getElementById('prompt-input');
+            const placeholder = document.getElementById('preview-placeholder');
+            const loading = document.getElementById('preview-loading');
+            const result = document.getElementById('preview-result');
+            const btn = document.getElementById('generate-btn');
+
+            if(!promptInput.value) return alert("Please enter a prompt");
+
+            placeholder.classList.add('hidden');
+            result.classList.add('hidden');
+            loading.classList.remove('hidden');
+            btn.disabled = true;
+            btn.innerHTML = '<div class="loader w-5 h-5 border-white/30 border-t-white"></div> Generating...';
+
+            setTimeout(() => {
+                const seed = Math.floor(Math.random() * 1000);
+                result.src = `https://picsum.photos/seed/${seed}/800/800`;
+                result.onload = () => {
+                    loading.classList.add('hidden');
+                    result.classList.remove('hidden');
+                    btn.disabled = false;
+                    btn.innerHTML = '<i class="fa-solid fa-wand-magic-sparkles"></i> Generate';
+                };
+            }, 2500);
+        });
+
+        document.querySelectorAll('.style-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                document.querySelectorAll('.style-btn').forEach(b => {
+                    b.classList.remove('bg-mv-violet/20', 'border-mv-violet', 'active');
+                    b.classList.add('bg-white/5', 'border-white/10');
+                });
+                e.target.classList.remove('bg-white/5', 'border-white/10');
+                e.target.classList.add('bg-mv-violet/20', 'border-mv-violet', 'active');
+            });
+        });
+
+        // Pitch Deck Logic
+        function changeSlide(direction) {
+            const current = document.getElementById(`slide-${currentSlide}`);
+            currentSlide += direction;
+            
+            if (currentSlide > totalSlides) currentSlide = 1;
+            if (currentSlide < 1) currentSlide = totalSlides;
+
+            const next = document.getElementById(`slide-${currentSlide}`);
+            
+            // Simple transition logic
+            current.classList.remove('active');
+            current.classList.add(direction > 0 ? 'prev' : 'next');
+            
+            next.classList.remove('prev', 'next');
+            next.classList.add('active');
+        }
+    </script>
+</body>
+</html>
